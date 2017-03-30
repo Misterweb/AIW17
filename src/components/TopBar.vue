@@ -15,8 +15,9 @@
     <ul id='product-dd' class='dropdown-content grey-text'>
       <li class="dd-block">[Discover]</li>
       <li class="divider"></li>
-      <li><a href="#!">Anywhere</a></li>
-      <li><a href="#!">Vision</a></li>
+      <li><a href="https://www.arkadin.fr/services/web-conference/arkadinanywhere" target="blank">Anywhere</a></li>
+      <li><a href="https://www.arkadin.fr/services/audio-conference/arkadinanytime" target="blank">Anytime</a></li>
+      <li><a href="https://www.arkadin.fr/services/video-conference/arkadinvision" target="blank">Vision</a></li>
       <li class="divider"></li>
       <li><a href="https://www.arkadin.com" target="blank"><i class="material-icons">thumb_up</i>Visit us</a></li>
     </ul>
