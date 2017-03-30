@@ -1,33 +1,54 @@
 <template>
   <div>
     <div id="topbar" class="row no-margin">
-      <div id="brand" class="col s3">
-        <a class="dropdown-button btn" href="#" v-dropdown:product-dd>
+      <div class="col s2 no-margin no-padding">
+        <a id="brand" class="dropdown-button btn" href="#" v-dropdown:product-dd>
           <img id="logo" src="../../static/images/small-logo.png"><i class="material-icons right white-text">arrow_drop_down</i>
         </a>
       </div>
-      <div class="col s6">Bar</div>
-      <div class="col s3">Account</div>
+      <div class="col s7">Bar</div>
+      <div class="col s3">
+        <account-badge v-bind:account="account"></account-badge>
+      </div>
     </div>
     
-    <ul id='product-dd' class='dropdown-content'>
+    <ul id='product-dd' class='dropdown-content grey-text'>
+      <li class="dd-block">[Discover]</li>
+      <li class="divider"></li>
       <li><a href="#!">Anywhere</a></li>
       <li><a href="#!">Vision</a></li>
       <li class="divider"></li>
-      <li><a href="#!">Visit us</a></li>
-      <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-      <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+      <li><a href="https://www.arkadin.com" target="blank"><i class="material-icons">thumb_up</i>Visit us</a></li>
     </ul>
   </div>
 
 </template>
 
 <script>
+import AccountBadge from "./AccountBadge";
+import globals from '@/libs/globals';
+
 export default {
   name: 'topbar',
+  components: {AccountBadge},
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      account: null,
+      private: {
+        subjectAccount: null
+      }
+    }
+  },
+  created() {
+    this.private.subjectAccount = globals.accountManager.subscribe(this.accountChanged);
+  },
+  destroyed() {
+    this.private.subjectAccount.dispose();
+  },
+  methods: {
+    accountChanged(account) {
+      this.account = account;
     }
   }
 }
@@ -44,6 +65,14 @@ export default {
   #brand {
     background-color: #C3003B;
     vertical-align: middle;
+
+    border-radius: 0;
+    border: 0;
+
+    margin: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
   }
 
   #topbar {
@@ -61,7 +90,25 @@ export default {
     position: absolute;
   }
 
-  .no-margin {
-    margin: 0 !important;
+  #product-dd {
+      margin-top: 50px;
+      color: #56565A;
+  }
+
+  #product-dd a {    
+      color: #56565A;
+  }
+
+  .dd-block {
+    font-size: 16px;
+    display: block;
+    line-height: 22px;
+    
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    cursor: default;
+
+    text-align: center;
   }
 </style>

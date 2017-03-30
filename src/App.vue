@@ -14,8 +14,30 @@ export default {
 }
 </script>
 
-<style>
-html,body {
+<style lang="scss">
+  @import "../static/scss/_config.scss";
+
+  // Generate all colors according to theme
+  @each $name, $color in $colors {
+      .ark-#{$name} {
+          background-color: $color !important;
+      }
+      .ark-#{$name}-text {
+        color: $color !important;
+      }
+  }
+
+
+  .no-margin {
+    margin: 0 !important;
+  }
+
+  .no-padding {
+    padding: 0 !important;
+  }
+
+
+html, body {
   background-color: black;
   color: white;
 
