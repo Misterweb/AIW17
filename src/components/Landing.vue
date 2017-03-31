@@ -1,8 +1,13 @@
 <template>
   <div id="landing">
-    <div class="row">
-      <div id="choice" class="col s10 push-s1 ark-grey">
-        <div class="row no-margin">
+    <div id="choice" class="row" >
+      <div class="col s10 m8 l6 push-s1 push-m2 push-l3 ark-grey no-padding">
+        <div class="row no-margin top-title">
+          <div class="col s12 center-align">
+            <img id="visionbb" src="../assets/logo_vision_small.png" />
+          </div>
+        </div>
+        <div class="row no-margin" style="padding-top: 7px;">
           <div class="col s6">
             <div class="card ark-card ark-red" @click="login()">
               <div class="card-content">
@@ -27,12 +32,20 @@
 <script>
 import TopBar from "@/components/TopBar";
 import router from '../router'
+import globals from '@/libs/globals'
 
 export default {
   name: 'landing',
   components: {TopBar},
   data () {
     return {
+    }
+  },
+  created() {
+    let hasAccount = globals.accountManager.load();
+    if(hasAccount) {
+       let account = globals.accountManager.get();
+       router.push(`meet/${account.company.toLowerCase()}`) 
     }
   },
   methods: {
@@ -49,13 +62,30 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
   #landing {
-    top: 55px;
-    position: relative;
+    height: 100%;
+
+    display: flex;
   }
 
   #choice {
+    margin: auto;
+    width: 100%;
+  }
+
+  #choice > div {
     /*box-shadow: 0px 0px 5px #333333;*/
-    padding: 10px;
+    margin: 10px;
+  }
+
+  #visionbb {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .top-title {
+    background-color: white;
+    padding: 0;
+    margin: 0;
   }
 
   .ark-card {

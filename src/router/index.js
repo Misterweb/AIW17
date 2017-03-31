@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Landing from '@/components/Landing'
 import Meet from '@/components/Meet'
 import Subscribe from '@/components/Subscribe'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
@@ -16,7 +17,11 @@ export default new Router({
         name: 'Subscribe',
         component: Subscribe
     }, {
-        path: '/meet',
+        path: '/login',
+        name: 'Login',
+        component: Login
+    }, {
+        path: '/meet/:id',
         name: 'Meet',
         component: Meet
     }]

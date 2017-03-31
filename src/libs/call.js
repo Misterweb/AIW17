@@ -26,7 +26,7 @@ export default class Call {
             return;
         }
 
-        this.api = new JitsiMeetExternalAPI(this.domain, this.roomName, this.width, this.height, this.element);
+        this.api = new JitsiMeetExternalAPI(this.domain, this.roomName, this.width, this.height, this.element, null, null, false);
     }
 
     dispose() {

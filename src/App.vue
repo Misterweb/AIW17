@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <top-bar></top-bar>
-    <router-view></router-view>
+    <transition name="component-fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -37,6 +39,19 @@ export default {
   }
 
 
+  .dd-block {
+    font-size: 16px;
+    display: block;
+    line-height: 22px;
+    
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    cursor: default;
+
+    text-align: center;
+  }
+
 html, body {
   background-color: black;
   color: white;
@@ -54,4 +69,17 @@ html, body {
   position: relative;
   height: 100%;
 }
+
+.component-fade-enter-active, .component-fade-leave-active {
+  transition: opacity .1s ease-in-out;
+  transition: padding-top .1s ease-in-out;
+}
+
+.component-fade-enter, .component-fade-leave-to {
+  opacity: 0;
+  padding-top: 25px;
+}
+
+
+
 </style>
