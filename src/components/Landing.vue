@@ -45,7 +45,9 @@ export default {
     let hasAccount = globals.accountManager.load();
     if(hasAccount) {
        let account = globals.accountManager.get();
-       router.push(`meet/${account.company.toLowerCase()}`) 
+       if(account.isConnected) {
+          router.push(`meet/${account.company.toLowerCase()}`);
+       }
     }
   },
   methods: {

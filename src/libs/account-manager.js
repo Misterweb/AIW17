@@ -25,6 +25,14 @@ export default class AccountManager {
         return false;
     }
 
+    disconnect() {
+        this.load();
+        if (tc.enabled()) {
+            this.account.isConnected = false;
+            this.set(this.account);
+        }
+    }
+
     remove() {
         if (tc.enabled()) {
             tc.remove('account');

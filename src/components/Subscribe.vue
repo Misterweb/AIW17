@@ -28,13 +28,20 @@
             </div>
           </div>
           <div class="row no-margin">
-            <div class="input-field col s12">
+            <div class="input-field col s6">
               <i class="material-icons prefix icon-margin">account_circle</i>
-              <input placeholder="Name"
-                    id="name"
+              <input placeholder="First Name"
+                    id="firstname"
                     type="text"
                     class="validate"
-                    v-model="name" />
+                    v-model="firstname" />
+            </div>
+            <div class="input-field col s6">
+              <input placeholder="Last Name"
+                    id="lastname"
+                    type="text"
+                    class="validate"
+                    v-model="lastname" />
             </div>
           </div>
           <div class="row no-margin">
@@ -84,26 +91,26 @@ export default {
   data () {
     return {
         email: "",
-        name: "",
+        firstname: "",
+        lastname: "",
         company: "",
         avatarUrl: "",
         avatarImage: null,
         password: ""
     }
   },
-  mounted() {
-    globals.accountManager.load();
-  },
   methods: {
    register() {
      globals.accountManager.set(new Account({
-         name: this.name,
+         firstname: this.firstname,
+         lastname: this.lastname,
          email: this.email,
          company: this.company,
          avatarImage: this.avatarImage,
          avatarUrl: this.avatarUrl,
          endDate: new Date(),
-         password: this.password
+         password: this.password,
+         isConnected: true
      }));
 
      router.push(`meet/${this.company.toLowerCase()}`);

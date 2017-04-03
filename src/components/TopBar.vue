@@ -134,16 +134,4 @@ export default {
       color: #56565A;
   }
 
-  .dd-block {
-    font-size: 16px;
-    display: block;
-    line-height: 22px;
-    
-    padding-top: 14px;
-    padding-bottom: 14px;
-
-    cursor: default;
-
-    text-align: center;
-  }
 </style>

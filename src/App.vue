@@ -49,7 +49,7 @@ export default {
 
     cursor: default;
 
-    text-align: center;
+    text-align: center !important;
   }
 
 html, body {

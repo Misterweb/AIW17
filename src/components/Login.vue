@@ -9,7 +9,7 @@
           </div>
           <div class="row no-margin">
             <div class="input-field col s12">
-              <input placeholder="E-mail"
+              <input v-model="email" placeholder="E-mail"
                     id="email"
                     type="text"
                     class="validate" />
@@ -17,7 +17,7 @@
           </div>
           <div class="row no-margin">
             <div class="input-field col s12">
-              <input placeholder="Password"
+              <input v-model="password" placeholder="Password"
                     id="password"
                     type="password"
                     class="validate" />
@@ -65,6 +65,8 @@ export default {
      if(account) {
          if(account.email === this.email && account.password === this.password) {
             this.error = false;
+            account.isConnected = true;
+            globals.accountManager.set(account);
 
             router.push(`meet/${account.company.toLowerCase()}`);
          } else {
@@ -73,7 +75,7 @@ export default {
      } else {
          router.push('subscribe');
      }
-     router.push("Meet");
+     //router.push("Meet");
    }
   }
 }

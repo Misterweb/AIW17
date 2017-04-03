@@ -30,6 +30,11 @@
         </div>
       </div>
     </div>
+    <transition name="fade">
+      <div id="message" v-if="showMessage">
+        Conference link copied to your clipboard
+      </div>
+    </transition>
     <div id="assistant" v-if="showCall">
         <!-- Element Showed -->
         <a id="menu" class="waves-effect waves-light btn btn-floating ark-red" @click="openAssistant()" ><i class="material-icons">info_outline</i></a>
@@ -37,9 +42,23 @@
         <!-- Tap Target Structure -->
         <div class="tap-target ark-red" data-activates="menu">
           <div class="tap-target-content">
-            <h5>Like the experience ?</h5>
-            <p>Please see our others products !</p>
-            <p><a class="btn ark-grey"><i class="material-icons left">thumb_up</i>Visit us !</a></p>
+            <div>
+              <h5>Like the experience ?</h5>
+              <a href="https://www.arkadin.fr/services/video-conference/arkadinvision" target="_blank" class="btn circle ark-yellow"><i class="material-icons left">star</i>Upgrade</a>
+            
+            </div>
+            <div style="position:absolute; top: -19px; left: 300px;">
+              <a @click="copyShareLink()" alt="Copy share link" class="btn-floating left white"><i class="material-icons ark-green-text">add</i></a>
+              </div>
+            <div style="position:absolute; top: 250px; left: 330px;">
+              <a href="https://www.arkadin.com/" target="_blank" class="btn-floating left white"><i class="material-icons ark-red-text">language</i></a>
+              </div>
+            <div style="position:absolute; top: 250px; left: 380px;">
+              <a href="https://goo.gl/Lnuq6q" target="_blank" class="btn-floating right ark-blue"><i class="material-icons">thumb_up</i></a>
+            </div>
+            <div style="position:absolute; top: 310px; left: 260px;">
+              <a href="https://www.arkadin.fr" target="_blank"><img id="assistantlogo" src="../assets/small-logo.png"></a>
+            </div>
           </div>
         </div>
     </div>
@@ -50,10 +69,15 @@
 </template>
 
 <script>
+require('materialize-css');
+
 import TopBar from "@/components/TopBar";
 import Call from "@/libs/call";
 import _ from "lodash";
 import router from '../router'
+import globals from '@/libs/globals'
+import key from 'keyboard-shortcut'
+import copy from 'copy-to-clipboard'
 
 export default {
   name: 'meet',
@@ -64,17 +88,29 @@ export default {
       thanks: false,
       call: null,
       loading: true,
-      roomId: this.$route.params.id
+      roomId: this.$route.params.id,
+      assistantOpen: false,
+      shareLink:"",
+      showMessage: false
     }
   },
   mounted() {
+     let account = globals.accountManager.get();
+     if(account === null || account.isConnected === false) router.push('/login');
+
      if(_.isEmpty(this.roomId) == false) {
+      key('alt x', () => {
+         if(this.assistantOpen) this.closeAssistant();
+         else this.openAssistant();
+         return false;
+      });
       this.startCall(this.roomId);
      }
   },
   methods: {
     startCall(id) {
       this._disposeCall();
+      this.shareLink = "https://visionbasicn.arkadin.com/" + id;
       this.call = new Call({
         roomName: id,
         element: document.querySelector('#meet')
@@ -88,7 +124,26 @@ export default {
     },
     openAssistant() {
         console.log('Open assistant');
+      
         $('.tap-target').tapTarget('open');
+        this.assistantOpen = true;
+        return false;
+    },
+    closeAssistant() {
+        console.log('Close assistant');
+        $('.tap-target').tapTarget('close');
+        this.assistantOpen = false;
+        return false;
+    },
+    copyShareLink() {
+      copy(this.shareLink);
+      this.displayMessage();
+    },
+    displayMessage() {
+      this.showMessage = true;
+      _.delay(() => {
+        this.showMessage = false;
+      }, 2000);
     },
     _readyToClose(evt) {
       console.log(`Ready to close.`);
@@ -136,6 +191,19 @@ export default {
   position: fixed;
   right: 30px;
   top: 80px;
+}
+
+#message {
+  position: fixed;
+  right: 80px;
+  top: 80px;
+
+  background-color: rgba(128, 128, 128, .8);
+  padding: 10px;
+
+  border-radius: 10px;
+
+  color: white;
 }
 
  #call {
@@ -187,4 +255,11 @@ export default {
     padding: 0;
     height: 100%;
   }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
 </style>

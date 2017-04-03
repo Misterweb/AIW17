@@ -4,7 +4,7 @@
             <a id="account-button" class="dropdown-button btn no-margin" v-dropdown:account-dd>
                 <img v-if="account.avatarUrl || account.avatarImage" v-bind:src="account.avatarUrl || account.avatarImage"
                     id="avatarImage" class="circle left" :alt="account.name" />
-                <span id="account-name">{{account.name}}</span>
+                <span id="account-name">{{account.firstname}} {{account.lastname}}</span>
             </a>
         </div>
        
@@ -14,7 +14,7 @@
             <li><a href="!#"><i class="material-icons left">perm_identity</i>My Profile</a></li>
             <li><a href="!#"><i class="material-icons left">settings</i>Settings</a></li>
             <li class="divider"></li>
-            <li><a @click="disconnect()" class="ark-red-text"><i class="material-icons">settings_power</i>Disconnect</a></li>
+            <li><a @click="disconnect()" @click.ctrl="remove()" class="ark-red-text"><i class="material-icons">settings_power</i>Disconnect</a></li>
         </ul>
     </div>
 </template>
@@ -33,6 +33,10 @@ export default {
   },
   methods: {
       disconnect() {
+        globals.accountManager.disconnect();
+        router.push('/');
+      },
+      remove() {
         globals.accountManager.remove();
         router.push('/');
       }
